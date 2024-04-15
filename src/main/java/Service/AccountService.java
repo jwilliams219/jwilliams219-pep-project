@@ -15,7 +15,6 @@ public class AccountService {
      * Constructor for a AccountService when a accountDAO is provided.
      * This is used for when a mock accountDAO that exhibits mock behavior is used in the test cases.
      * This would allow the testing of AccountService independently of AcountDAO.
-     * There is no need to modify this constructor.
      * @param accountDAO
      */
     public AccountService(AccountDAO accountDAO){
@@ -33,5 +32,13 @@ public class AccountService {
      */
     public Account addAccount(Account account) {
         return accountDAO.insertAccount(account);
+    }
+
+    /**
+     * @param account 
+     * @return The verified account if the login was successful.
+     */
+    public Account login(Account account) {
+        return accountDAO.verifyAccount(account);
     }
 }

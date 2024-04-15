@@ -28,6 +28,11 @@ public class AccountDAO {
         return accounts;
     }
 
+    /**
+     * 
+     * @param account
+     * @return inserted account
+     */
     public Account insertAccount(Account account){
         Connection connection = ConnectionUtil.getConnection();
         try {
@@ -45,6 +50,22 @@ public class AccountDAO {
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * 
+     * @param account
+     * @return verified account
+     */
+    public Account verifyAccount(Account account) {
+        List<Account> accounts = getAllAccounts();
+        for (int i = 0; i < accounts.size(); i++) {
+            Account currAccount = accounts.get(i);
+            if (currAccount.getUsername().equals(account.getUsername()) && currAccount.getPassword().equals(account.getPassword())) {
+                return currAccount;
+            }
         }
         return null;
     }
