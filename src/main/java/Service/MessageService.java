@@ -30,4 +30,12 @@ public class MessageService {
     public Message addMessage(Message message) {
         return messageDAO.insertMessage(message);
     }
+
+    /**
+     * @param id
+     * @return The message if exists
+     */
+    public Message getMessageById(int id) {
+        return messageDAO.getMessageById(id);
+    }
 }

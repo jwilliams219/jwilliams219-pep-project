@@ -1,5 +1,6 @@
 package Controller;
 
+import java.util.List;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import Model.*;
@@ -31,6 +32,9 @@ public class SocialMediaController {
         app.post("/register", this::register);
         app.post("/login", this::login);
         app.post("/messages", this::createMessage);
+
+        app.get("/messages", this::getAllMessages);
+        app.get("/messages/{message_id}", this::getMessageById);
 
         return app;
     }
@@ -71,6 +75,11 @@ public class SocialMediaController {
         }
     }
 
+    /**
+     * New message endpoint
+     * @param context
+     * @throws JsonProcessingException
+     */
     private void createMessage(Context context) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(context.body(), Message.class);
@@ -86,5 +95,34 @@ public class SocialMediaController {
                 context.status(400);
             }
         }
+    }
+
+    /**
+     * Get all message endpoint
+     * @param context
+     * @throws JsonProcessingException
+     */
+    private void getAllMessages(Context context) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        List<Message> messages = messageService.getAllMessages();
+        context.json(mapper.writeValueAsString(messages));
+        context.status(200);
+    }
+
+    /**
+     * Get specific message by message id endpoint
+     * @param context
+     * @throws JsonProcessingException
+     */
+    private void getMessageById(Context context) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        int message_id = Integer.valueOf(context.pathParam("message_id"));
+        Message message = messageService.getMessageById(message_id);
+        if (message != null) {
+            context.json(mapper.writeValueAsString(message));
+        }
+        context.status(200);
     }
 }
