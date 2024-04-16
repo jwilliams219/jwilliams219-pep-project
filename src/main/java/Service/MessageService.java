@@ -38,4 +38,28 @@ public class MessageService {
     public Message getMessageById(int id) {
         return messageDAO.getMessageById(id);
     }
+
+    /**
+     * @param id
+     * @return message if deleted
+     */
+    public Message deleteMessageById(int id) {
+        return messageDAO.deleteMessageById(id);
+    }
+
+    /**
+     * @param id
+     * @return message if updated
+     */
+    public Message updateMessageById(int id, Message message) {
+        return messageDAO.updateMessageById(id, message);
+    }
+
+    /**
+     * @param account_id
+     * @return all messages found by account_id
+     */
+    public List<Message> getAllMessagesByAccount(int account_id) {
+        return messageDAO.getAllMessagesByAccount(account_id);
+    }
 }
